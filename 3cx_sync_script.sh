@@ -58,5 +58,5 @@ COPY(
 EOF
 
 # Some black magic
-sed - i 's/<\/DivinusIPPhoneDirectory>//g' / tmp / yealink_phonebook.xml
-cat / tmp / yealink_extensions.xml >> /tmp/yealink_phonebook.xml && echo "</DivinusIPPhoneDirectory>" >> /tmp/yealink_phonebook.xml
+sed -i 's/<\/DivinusIPPhoneDirectory>//g' /tmp/ yealink_phonebook.xml
+cat /tmp/yealink_extensions.xml >> /tmp/yealink_phonebook.xml && echo "</DivinusIPPhoneDirectory>" >> /tmp/yealink_phonebook.xml
