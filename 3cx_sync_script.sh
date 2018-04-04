@@ -49,6 +49,7 @@ cat << \EOF | sudo su postgres -c "psql -d database_single"
                                 XMLAGG(
                                         XMLELEMENT(
                                                 NAME "DirectoryEntry",
+                                                XMLELEMENT(Name "Name", uvr.display_name),
                                                 XMLELEMENT(Name "Telephone", uvr.dn)
                                         )
                                 )
@@ -60,5 +61,6 @@ EOF
 # Some black magic
 sed -i 's/<\/DivinusIPPhoneDirectory>//g' /tmp/yealink_phonebook.xml
 cat /tmp/yealink_extensions.xml >> /tmp/yealink_phonebook.xml && echo "</DivinusIPPhoneDirectory>" >> /tmp/yealink_phonebook.xml
+rm -rf /tmp/yealink_extensions.xml
 
-
+#Further cleanup will be done by caller script
