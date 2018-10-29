@@ -1,5 +1,24 @@
 #!/bin/bash
 
+##########################################
+#                                        #
+#	Which Column is which Number	 #
+#					 #
+#        column     |   nubmertype       #
+#                   |                    #
+#       phonenumber |   mobile           #
+#       pv_an0      |   mobile2          #
+#       pv_an1      |   private          #
+#       pv_an2      |   private2         #
+#       pv_an3      |   business         #
+#       pv_an4      |   business2        #
+#                                        #
+##########################################
+
+# Remove old files
+rm -rf /tmp/yealink_extensions.xml
+rm -rf /tmp/yealink_phonebook.xml
+
 # Export phonebook entries
 cat << \EOF | sudo su postgres -c "psql -d database_single"
         COPY(
@@ -49,11 +68,11 @@ cat << \EOF | sudo su postgres -c "psql -d database_single"
                                 XMLAGG(
                                         XMLELEMENT(
                                                 NAME "DirectoryEntry",
-                                                XMLELEMENT(Name "Name", uvr.display_name),
-                                                XMLELEMENT(Name "Telephone", uvr.dn)
+                                                XMLELEMENT(Name "Name", uv.display_name),
+                                                XMLELEMENT(Name "Telephone", uv.dn)
                                         )
                                 )
-                        ) as entry FROM users_view_reverse uvr
+                        ) as entry FROM users_view uv
                 ) AS xmlpb
         ) TO '/tmp/yealink_extensions.xml';
 EOF
